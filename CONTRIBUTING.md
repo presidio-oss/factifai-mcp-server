@@ -34,17 +34,14 @@ We welcome feature suggestions! Please create an issue with:
 1. Fork the repository
 2. Create a new branch (`git checkout -b feature/your-feature-name`)
 3. Make your changes
-4. Run tests (`npm test`)
-5. Commit your changes following [Conventional Commits](https://www.conventionalcommits.org/) specification
-6. Push to your branch (`git push origin feature/your-feature-name`)
-7. Open a Pull Request
+4. Commit your changes following [Conventional Commits](https://www.conventionalcommits.org/) specification
+5. Push to your branch (`git push origin feature/your-feature-name`)
+6. Open a Pull Request
 
 #### Pull Request Guidelines
 
 - Follow the [Conventional Commits](https://www.conventionalcommits.org/) specification for commit messages
-- Include tests for new features or bug fixes
 - Update documentation as needed
-- Ensure all tests pass
 - Keep pull requests focused on a single concern
 
 ## Development Setup
@@ -103,7 +100,6 @@ bun install
 - Follow the existing code style
 - Write clear, descriptive comments
 - Include JSDoc for public APIs
-- Write tests for new functionality
 
 ## Documentation
 

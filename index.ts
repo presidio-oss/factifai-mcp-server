@@ -174,7 +174,7 @@ async function runBrowserTaskInChildProcess(session: FactifaiSession): Promise<b
 			}
 			const result =
 				readJUNITXML(session.sessionId) ||
-				`The test is complted but not the report is not available yet, you may check back later.`
+				`The test is completed but the report is not available yet, you may check back later.`
 			sessionManager.updateSession(session.sessionId, {
 				status: FactifaiSessionStatus.COMPLETED,
 				result,
