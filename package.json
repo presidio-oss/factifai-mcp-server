@@ -4,7 +4,7 @@
 	"version": "0.0.2-rc.0",
 	"type": "module",
 	"bin": {
-		"factifai-mcp-server": "./dist/index.js"
+		"factifai-mcp-server": "dist/index.js"
 	},
 	"author": "Presidio",
 	"publishConfig": {
@@ -52,7 +52,7 @@
 		"playwright": "1.53.1"
 	},
 	"files": [
-		"dist/",
+		"dist",
 		"README.md",
 		"LICENSE",
 		"package.json"
