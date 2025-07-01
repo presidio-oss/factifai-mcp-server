@@ -15,154 +15,80 @@ permissions:
   attestations: write
 
 jobs:
-  lint:
-    name: Lint
+  ci-cd:
+    name: CI/CD Pipeline
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          # Smart fetch: full history only for releases (changelog generation), shallow for everything else
+          fetch-depth: ${{ (github.event_name == 'push' && (github.ref == 'refs/heads/release' || github.ref == 'refs/heads/rc')) && 0 || 1 }}
 
       - name: Setup Bun
         uses: oven-sh/setup-bun@v2
         with:
           bun-version: 1.2.15
 
-      - name: Cache Bun global packages
+      - name: Cache Dependencies
         uses: actions/cache@v4
         with:
           path: ~/.bun/install/cache
-          key: ${{ runner.os }}-bun-${{ hashFiles('**/package.json') }}
+          key: ${{ runner.os }}-bun-${{ hashFiles('**/package.json', '**/bun.lock') }}
           restore-keys: |
             ${{ runner.os }}-bun-
 
-      - name: Cache Playwright browser binaries
-        uses: actions/cache@v4
-        with:
-          path: ~/.cache/ms-playwright
-          key: ${{ runner.os }}-playwright-${{ hashFiles('**/package.json') }}
-          restore-keys: |
-            ${{ runner.os }}-playwright-
-
-      - name: Install dependencies
+      - name: Install Dependencies
         run: bun install
 
-      - name: Run format check
-        run: bun run format:check
-
-  build:
-    name: Build
-    needs: lint
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Setup Bun
-        uses: oven-sh/setup-bun@v2
-        with:
-          bun-version: 1.2.15
-
-      - name: Cache Bun global packages
-        uses: actions/cache@v4
-        with:
-          path: ~/.bun/install/cache
-          key: ${{ runner.os }}-bun-${{ hashFiles('**/package.json') }}
-          restore-keys: |
-            ${{ runner.os }}-bun-
-
-      - name: Cache Playwright browser binaries
-        uses: actions/cache@v4
-        with:
-          path: ~/.cache/ms-playwright
-          key: ${{ runner.os }}-playwright-${{ hashFiles('**/package.json') }}
-          restore-keys: |
-            ${{ runner.os }}-playwright-
-
-      - name: Install dependencies
-        run: bun install
-
-      - name: Configure git
+      - name: Lint & Build (Parallel)
         run: |
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git config --global user.name  "github-actions[bot]"
+          echo "🚀 Running lint and build in parallel..."
+          bun run format:check &
+          LINT_PID=$!
+          bun run build &
+          BUILD_PID=$!
 
-      - name: Build
-        run: bun run build
+          # Wait for both processes and capture exit codes
+          wait $LINT_PID
+          LINT_EXIT=$?
+          wait $BUILD_PID  
+          BUILD_EXIT=$?
 
-      - name: Upload build artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: build-artifacts
-          path: dist/
+          # Check if either failed
+          if [ $LINT_EXIT -ne 0 ]; then
+            echo "❌ Lint failed"
+            exit $LINT_EXIT
+          fi
 
-      - name: Attest build artifacts
-        if: github.ref == 'refs/heads/release' || github.ref == 'refs/heads/rc'
+          if [ $BUILD_EXIT -ne 0 ]; then
+            echo "❌ Build failed"
+            exit $BUILD_EXIT
+          fi
+
+          echo "✅ Lint and build completed successfully"
+
+      - name: Attest Build Artifacts
+        if: github.event_name == 'push' && (github.ref == 'refs/heads/release' || github.ref == 'refs/heads/rc')
         uses: actions/attest-build-provenance@v2
         with:
           subject-path: 'dist/*'
 
-  release:
-    name: Release
-    needs: build
-    if: github.event_name == 'push' && (github.ref == 'refs/heads/release' || github.ref == 'refs/heads/rc')
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Setup Bun
-        uses: oven-sh/setup-bun@v2
-        with:
-          bun-version: 1.2.15
-
-      - name: Cache Bun global packages
-        uses: actions/cache@v4
-        with:
-          path: ~/.bun/install/cache
-          key: ${{ runner.os }}-bun-${{ hashFiles('**/package.json') }}
-          restore-keys: |
-            ${{ runner.os }}-bun-
-
-      - name: Cache Playwright browser binaries
-        uses: actions/cache@v4
-        with:
-          path: ~/.cache/ms-playwright
-          key: ${{ runner.os }}-playwright-${{ hashFiles('**/package.json') }}
-          restore-keys: |
-            ${{ runner.os }}-playwright-
-
-      - name: Install dependencies
-        run: bun install
-
-      - name: Download build artifacts
-        uses: actions/download-artifact@v4
-        with:
-          name: build-artifacts
-          path: dist
-
-      - name: Configure git & npm
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
-        run: |
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git config --global user.name  "github-actions[bot]"
-          echo "//registry.npmjs.org/:_authToken=$NODE_AUTH_TOKEN" >> ~/.npmrc
-
       - name: Release
+        if: github.event_name == 'push' && (github.ref == 'refs/heads/release' || github.ref == 'refs/heads/rc')
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
         run: |
+          echo "🔧 Configuring git and npm..."
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "github-actions[bot]"
+          echo "//registry.npmjs.org/:_authToken=$NODE_AUTH_TOKEN" >> ~/.npmrc
+
           if [ "${{ github.ref }}" = "refs/heads/release" ]; then
-            echo "Releasing stable version..."
+            echo "🚀 Releasing stable version..."
             bun run release:ci
           elif [ "${{ github.ref }}" = "refs/heads/rc" ]; then
-            echo "Releasing RC version..."
+            echo "🚀 Releasing RC version..."
             bun run release:rc:ci
           fi
