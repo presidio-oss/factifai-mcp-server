@@ -28,7 +28,7 @@
 		"dev": "concurrently \"npm:dev:watch\" \"npm:dev:mcp\"",
 		"dev:link": "npm link",
 		"build": "tsup index.ts --format esm --dts --out-dir dist --clean",
-		"postinstall": "playwright install --with-deps",
+		"postinstall": "node postinstall.cjs",
 		"format": "prettier --write .",
 		"format:check": "prettier --check .",
 		"release": "release-it",
@@ -53,6 +53,7 @@
 	},
 	"files": [
 		"dist",
+		"postinstall.cjs",
 		"README.md",
 		"LICENSE",
 		"package.json"

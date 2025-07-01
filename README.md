@@ -20,21 +20,21 @@ A Model Context Protocol (MCP) server for [Factifai](https://github.com/presidio
 ## Table of Contents
 
 - [Factifai MCP Server](#factifai-mcp-server)
-	- [Table of Contents](#table-of-contents)
-	- [Requirements](#requirements)
-	- [Installation](#installation)
-		- [Installation Note](#installation-note)
-		- [Pre-Installation Tip](#pre-installation-tip)
-	- [Configuration](#configuration)
-		- [Environment Variables](#environment-variables)
-		- [Model Provider Configuration Examples](#model-provider-configuration-examples)
-			- [Bedrock Configuration Example](#bedrock-configuration-example)
-			- [OpenAI Configuration Example](#openai-configuration-example)
-	- [Factifai MCP integration with popular IDE and extension](#factifai-mcp-integration-with-popular-ide-and-extension)
-		- [Available Tools](#available-tools)
-	- [Contributing](#contributing)
-	- [Security](#security)
-	- [License](#license)
+  - [Table of Contents](#table-of-contents)
+  - [Requirements](#requirements)
+  - [Installation](#installation)
+    - [Installation Note](#installation-note)
+    - [Pre-Installation Tip](#pre-installation-tip)
+  - [Configuration](#configuration)
+    - [Environment Variables](#environment-variables)
+    - [Model Provider Configuration Examples](#model-provider-configuration-examples)
+      - [Bedrock Configuration Example](#bedrock-configuration-example)
+      - [OpenAI Configuration Example](#openai-configuration-example)
+  - [Factifai MCP integration with popular IDE and extension](#factifai-mcp-integration-with-popular-ide-and-extension)
+    - [Available Tools](#available-tools)
+  - [Contributing](#contributing)
+  - [Security](#security)
+  - [License](#license)
 
 ## Requirements
 
@@ -58,6 +58,7 @@ We recommend `npx` to install the server, but you can use any node package manag
 ⚠️ **Important**: The first time you install Factifai MCP Server, it will automatically download and install browser dependencies using Playwright. This process may take several minutes depending on your internet connection and system specifications.
 
 The installation includes:
+
 - Downloading browser binaries (Chromium, Firefox, WebKit)
 - Installing browser dependencies
 - Setting up the necessary environment
@@ -79,6 +80,7 @@ npx --yes @presidio-dev/factifai-mcp-server@latest
 ```
 
 This pre-installation step:
+
 1. Ensures browsers are downloaded without MCP client timeout constraints
 2. Significantly speeds up the MCP server's first-time installation
 3. Prevents installation failures due to timeout issues in your IDE or MCP client
