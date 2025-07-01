@@ -19,14 +19,22 @@ A Model Context Protocol (MCP) server for [Factifai](https://github.com/presidio
 
 ## Table of Contents
 
-- [Requirements](#requirements)
-- [Installation](#installation)
-- [Configuration](#configuration)
-- [IDE Integration](#factifai-mcp-integration-with-popular-ide-and-extension)
-- [Available Tools](#available-tools)
-- [Contributing](#contributing)
-- [Security](#security)
-- [License](#license)
+- [Factifai MCP Server](#factifai-mcp-server)
+	- [Table of Contents](#table-of-contents)
+	- [Requirements](#requirements)
+	- [Installation](#installation)
+		- [Installation Note](#installation-note)
+		- [Pre-Installation Tip](#pre-installation-tip)
+	- [Configuration](#configuration)
+		- [Environment Variables](#environment-variables)
+		- [Model Provider Configuration Examples](#model-provider-configuration-examples)
+			- [Bedrock Configuration Example](#bedrock-configuration-example)
+			- [OpenAI Configuration Example](#openai-configuration-example)
+	- [Factifai MCP integration with popular IDE and extension](#factifai-mcp-integration-with-popular-ide-and-extension)
+		- [Available Tools](#available-tools)
+	- [Contributing](#contributing)
+	- [Security](#security)
+	- [License](#license)
 
 ## Requirements
 
@@ -44,6 +52,36 @@ npx --yes @presidio-dev/factifai-mcp-server@1.2.3
 ```
 
 We recommend `npx` to install the server, but you can use any node package manager of your preference such as `yarn`, `pnpm`, `bun`, etc.
+
+### Installation Note
+
+⚠️ **Important**: The first time you install Factifai MCP Server, it will automatically download and install browser dependencies using Playwright. This process may take several minutes depending on your internet connection and system specifications.
+
+The installation includes:
+- Downloading browser binaries (Chromium, Firefox, WebKit)
+- Installing browser dependencies
+- Setting up the necessary environment
+
+This happens only once, and subsequent runs will be much faster as the browsers are already installed.
+
+### Pre-Installation Tip
+
+⚠️ **Recommended for First-Time Installation**: Many MCP clients have strict timeout limits for server startup. The browser installation process during first-time setup may exceed these timeouts, causing the installation to fail or appear non-responsive.
+
+To avoid timeout issues, we strongly recommend pre-installing Playwright browsers manually:
+
+```bash
+# Step 1: Install Playwright browsers manually before installing the MCP server
+npx playwright install --with-deps
+
+# Step 2: Then install the MCP server (will be much faster and avoid timeouts)
+npx --yes @presidio-dev/factifai-mcp-server@latest
+```
+
+This pre-installation step:
+1. Ensures browsers are downloaded without MCP client timeout constraints
+2. Significantly speeds up the MCP server's first-time installation
+3. Prevents installation failures due to timeout issues in your IDE or MCP client
 
 ## Configuration
 
