@@ -1,7 +1,7 @@
 {
 	"name": "@presidio-dev/factifai-mcp-server",
 	"description": "A MCP server for Factifai",
-	"version": "0.0.2-rc.4",
+	"version": "0.0.2",
 	"type": "module",
 	"bin": {
 		"factifai-mcp-server": "dist/index.js"

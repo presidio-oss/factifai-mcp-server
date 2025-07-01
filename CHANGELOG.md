@@ -1,5 +1,7 @@
 # Changelog
 
+## [0.0.2](https://github.com/presidio-oss/factifai-mcp-server/compare/v0.0.2-rc.4...v0.0.2) (2025-07-01)
+
 ## 0.0.2-rc.4 (2025-07-01)
 
 ## 0.0.2-rc.3 (2025-07-01)
