@@ -144,7 +144,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: build-artifacts
-          path: .
+          path: dist
 
       - name: Configure git & npm
         env:
