@@ -49,7 +49,7 @@
 		"@modelcontextprotocol/sdk": "^1.13.0",
 		"@presidio-dev/factifai-agent": "^1.1.2",
 		"pino": "^9.7.0",
-		"playwright": "1.53.1"
+		"playwright": "1.53.2"
 	},
 	"files": [
 		"dist",
