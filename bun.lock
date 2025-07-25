@@ -7,7 +7,6 @@
         "@modelcontextprotocol/sdk": "^1.13.0",
         "@presidio-dev/factifai-agent": "^1.1.2",
         "pino": "^9.7.0",
-        "playwright": "1.53.2",
       },
       "devDependencies": {
         "@modelcontextprotocol/inspector": "^0.14.3",
@@ -265,7 +264,7 @@
 
     "@playwright/test": ["@playwright/test@1.53.1", "", { "dependencies": { "playwright": "1.53.1" }, "bin": { "playwright": "cli.js" } }, "sha512-Z4c23LHV0muZ8hfv4jw6HngPJkbbtZxTkxPNIg7cJcTc9C28N/p2q7g3JZS2SiKBBHJ3uM1dgDye66bB7LEk5w=="],
 
-    "@presidio-dev/factifai-agent": ["@presidio-dev/factifai-agent@1.1.2", "", { "dependencies": { "@aws-sdk/client-bedrock-runtime": "^3.821.0", "@langchain/community": "^0.3.45", "@langchain/core": "^0.3.57", "@langchain/langgraph": "^0.2.74", "@langchain/openai": "^0.5.11", "@presidio-dev/playwright-core": "1.0.5", "boxen": "^8.0.1", "chalk": "^5.4.1", "dotenv": "^16.5.0", "figures": "^6.1.0", "langchain": "^0.3.27", "ora": "^8.2.0", "pretty-bytes": "^7.0.0", "pretty-ms": "^9.2.0", "string-width": "^7.2.0", "table": "^6.9.0", "yargs": "^17.7.2", "zod": "^3.25.42" }, "bin": { "factifai-agent": "dist/cli.js" } }, "sha512-55mESasMH8GCJpag/qeiMMD5pPKa6WSMWGEQT8j7C5FTBSufTX2fgUUGEiVsbhUfwhl8ltbQR0NI5aytM01cOg=="],
+    "@presidio-dev/factifai-agent": ["@presidio-dev/factifai-agent@1.2.0", "", { "dependencies": { "@aws-sdk/client-bedrock-runtime": "^3.821.0", "@langchain/community": "^0.3.45", "@langchain/core": "^0.3.57", "@langchain/langgraph": "^0.2.74", "@langchain/openai": "^0.5.11", "@presidio-dev/playwright-core": "1.0.5", "boxen": "^8.0.1", "chalk": "^5.4.1", "dotenv": "^16.5.0", "figures": "^6.1.0", "langchain": "^0.3.27", "ora": "^8.2.0", "pretty-bytes": "^7.0.0", "pretty-ms": "^9.2.0", "string-width": "^7.2.0", "table": "^6.9.0", "yargs": "^17.7.2", "zod": "^3.25.42" }, "bin": { "factifai-agent": "dist/cli.js" } }, "sha512-CP4m9Qeqt6HuxLS14GAv6VAzqKfUM1P7hPJ5Lm9jVKdlOK9IkHbOQOyKqhmlxN+ryGIz30rQfCMI0igEc7uSgA=="],
 
     "@presidio-dev/playwright-core": ["@presidio-dev/playwright-core@1.0.5", "", { "dependencies": { "playwright": "^1.52.0" } }, "sha512-JiDCDwJv//zBc7kSucVEE4r+0DX8ZPtk4PqTFZn7b++kkaf1qZJDoyXhfHu4as0suglWhjkmhV5pNB5p/Te3cw=="],
 
